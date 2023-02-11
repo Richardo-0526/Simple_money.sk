@@ -1,0 +1,173 @@
+options:
+	a: &c>&6>&e> &6System &e<&6<&c<&r
+
+# 제작자 : _Richardo
+# 2차 수정 가능, 2차 배포 금지
+# 
+#
+#
+#
+#
+#
+#
+	
+command /돈 [<string=도움말>] [<player>] [<integer>]:
+	trigger:
+		if player is op:
+			if arg 1 is "도움말":
+				send "&7----- {@a} &7-----"
+				send "/돈 <설정, 추가, 제거, 도움말> <플레이어> <금액>"
+			else:
+				if arg 1 is "설정" or "추가" or "제거":
+					if arg 1 is "설정":
+						if arg 2 is set:
+							if arg 2 is not "전체":
+								if arg 3 is set:
+									set {%arg 2's uuid%::money} to arg 3
+									set {_int} to "%arg 3%"
+									set {_split.int::*} to {_int} split at ""
+									set {_len} to length of {_int}
+									set {_n} to round up ({_len}/3)
+									
+									loop {_n} times:
+										loop 3 times:
+											if {_t} is not set:
+												set {_t} to "%{_split.int::%{_len}%}%"
+												
+											else:
+												{_split.int::%{_len}%} is set
+												set {_t} to "%{_split.int::%{_len}%}%%{_t}%"
+											set {_len} to {_len} - 1
+										loop-number < {_n}
+										set {_t} to ",%{_t}%"
+									play sound "entity.experience_orb.pickup" with volume 1 and pitch 1 at player
+									send "{@a} %arg 2% 님의 돈을 &b%{_t}%&r원으로 &b설정&r하였습니다."
+							
+								else:
+									send "{@a} &c금액을 입력해주세요."
+									stop
+							
+						else:
+							send "{@a} &c플레이어를 입력해주세요."
+							stop
+					if arg 1 is "추가":
+						if arg 2 is set:
+							if arg 2 is not "전체":
+								if arg 3 is set:
+									add arg 3 to {%arg 2's uuid%::money}
+									set {_int} to "%arg 3%"
+									set {_split.int::*} to {_int} split at ""
+									set {_len} to length of {_int}
+									set {_n} to round up ({_len}/3)
+									
+									loop {_n} times:
+										loop 3 times:
+											if {_t} is not set:
+												set {_t} to "%{_split.int::%{_len}%}%"
+												
+											else:
+												{_split.int::%{_len}%} is set
+												set {_t} to "%{_split.int::%{_len}%}%%{_t}%"
+											set {_len} to {_len} - 1
+										loop-number < {_n}
+										set {_t} to ",%{_t}%"
+									play sound "entity.experience_orb.pickup" with volume 1 and pitch 1 at player
+									set {_int} to "%{%arg 2's uuid%::money}%"
+									set {_split.int::*} to {_int} split at ""
+									set {_len} to length of {_int}
+									set {_n} to round up ({_len}/3)
+									
+									loop {_n} times:
+										loop 3 times:
+											if {_t1} is not set:
+												set {_t1} to "%{_split.int::%{_len}%}%"
+												
+											else:
+												{_split.int::%{_len}%} is set
+												set {_t1} to "%{_split.int::%{_len}%}%%{_t1}%"
+											set {_len} to {_len} - 1
+										loop-number < {_n}
+										set {_t1} to ",%{_t1}%"
+									send "{@a} %arg 2% 님의 돈에서 &b%{_t}%&r원을 &a추가&r하였습니다. 현재 보유 돈 : &b%{_t1}%&r원"
+						
+								else:
+									send "{@a} &c금액을 입력해주세요."
+									stop
+						else:
+							send "{@a} &c플레이어를 입력해주세요."
+							stop
+					if arg 1 is "제거":
+						if arg 2 is set:
+							if arg 2 is not "전체":
+								if arg 3 is set:
+									remove arg 3 from {%arg 2's uuid%::money}
+									set {_int} to "%arg 3%"
+									set {_split.int::*} to {_int} split at ""
+									set {_len} to length of {_int}
+									set {_n} to round up ({_len}/3)
+									
+									loop {_n} times:
+										loop 3 times:
+											if {_t} is not set:
+												set {_t} to "%{_split.int::%{_len}%}%"
+												
+											else:
+												{_split.int::%{_len}%} is set
+												set {_t} to "%{_split.int::%{_len}%}%%{_t}%"
+											set {_len} to {_len} - 1
+										loop-number < {_n}
+										set {_t} to ",%{_t}%"
+									play sound "entity.experience_orb.pickup" with volume 1 and pitch 1 at player
+									set {_int} to "%{%arg 2's uuid%::money}%"
+									set {_split.int::*} to {_int} split at ""
+									set {_len} to length of {_int}
+									set {_n} to round up ({_len}/3)
+									
+									loop {_n} times:
+										loop 3 times:
+											if {_t1} is not set:
+												set {_t1} to "%{_split.int::%{_len}%}%"
+												
+											else:
+												{_split.int::%{_len}%} is set
+												set {_t1} to "%{_split.int::%{_len}%}%%{_t1}%"
+											set {_len} to {_len} - 1
+										loop-number < {_n}
+										set {_t1} to ",%{_t1}%"
+									send "{@a} %arg 2% 님의 돈에서 &b%{_t}%&r원을 &c제거&r하였습니다. 현재 보유 돈 : &b%{_t1}%&r원"
+							
+								else:
+									send "{@a} &c금액을 입력해주세요."
+									stop
+						else:
+							send "{@a} &c플레이어를 입력해주세요."
+							stop
+				else:
+					send "{@a} &c설정, 추가, 제거 중에 선택해주세요."
+					stop
+					
+every 10 tick:
+	loop all players:
+		
+		set {_%loop-player's uuid%::_int} to "%{%loop-player's uuid%::money}%"
+		set {_%loop-player's uuid%::_split.int::*} to {_%loop-player's uuid%::_int} split at ""
+		set {_%loop-player's uuid%::_len} to length of {_%loop-player's uuid%::_int}
+		set {_%loop-player's uuid%::_n} to round up ({_%loop-player's uuid%::_len}/3)
+		
+		loop {_%loop-player's uuid%::_n} times:
+			loop 3 times:
+				if {_%loop-player's uuid%::_t} is not set:
+					set {_%loop-player's uuid%::_t} to "%{_%loop-player's uuid%::_split.int::%{_%loop-player's uuid%::_len}%}%"
+					
+				else:
+					{_%loop-player's uuid%::_split.int::%{_%loop-player's uuid%::_len}%} is set
+					set {_%loop-player's uuid%::_t} to "%{_%loop-player's uuid%::_split.int::%{_%loop-player's uuid%::_len}%}%%{_%loop-player's uuid%::_t}%"
+				set {_%loop-player's uuid%::_len} to {_%loop-player's uuid%::_len} - 1
+			loop-number < {_%loop-player's uuid%::_n}
+			set {_%loop-player's uuid%::_t} to ",%{_%loop-player's uuid%::_t}%"
+		
+		wipe loop-player's sidebar
+		set name of sidebar of loop-player to "{@a}"
+		set score "%{_%loop-player's uuid%::_t}%원" in sidebar of loop-player to 1
+		
+				
